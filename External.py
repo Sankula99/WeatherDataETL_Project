@@ -4,11 +4,15 @@ import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sb
+import os
+from dotenv import load_dotenv
 #Get API from OpenWeather for Sydney
-api_k = "8bd57a2fbfb96c06ec7b64c69ce07071"
+#hide token using .env file and loading using python-dotenv package
+load_dotenv()
+API_KEY =os.getenv("API_KEY")
 lat =-33.8688
 lon = 151.2093
-url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=5&appid={api_k}"
+url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&cnt=5&appid={API_KEY}"
 
 
 response = requests.get(url)
@@ -32,7 +36,6 @@ if response.status_code == 200:
         pressure = (report['main']['pressure'])
         groundLvl = (report['main']['pressure'])
         humidity = (report['main']['humidity'])
-weather_data.append({date_time,temp_s,feel,min, max,pressure,groundLvl,humidity})
-print(weather_data)
-df= pd.DataFrame(weather_data)
-df.head()
+    weather_data.append({date_time,temp_s,feel,min, max,pressure,groundLvl,humidity})
+    df= pd.DataFrame(weather_data)
+    df.head()
